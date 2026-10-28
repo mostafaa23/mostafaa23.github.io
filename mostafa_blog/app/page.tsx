@@ -1,0 +1,11 @@
+import Link from 'next/link'
+import { ArrowUpRight, Code2, Mail } from 'lucide-react'
+import BlogShell, { ArticleCard } from '@/components/blog-shell'
+import { articles, publicArticles } from '@/lib/articles'
+import { basePath } from '@/lib/base-path'
+
+export default function Page() {
+  const featured = articles.find((article) => article.featured)!
+  const visibleArticles = [featured, ...publicArticles.filter((article) => article.slug !== featured.slug)]
+  return <BlogShell><main className="home-main"><section className="profile container"><div className="avatar"><img src={`${basePath}/mostafa-profile.jpg`} alt="Mostafa Tolba" /></div><h1>MOSTAFA</h1><p className="profile-role">Software Engineer | Penetration Tester | Cloud Security</p><p className="profile-bio">I&apos;m Mostafa Tolba, a cybersecurity professional focused on cloud security and passionate about offensive security, malware analysis, and vulnerability research.</p><p className="profile-note">This blog contains security research notes, safe lab experiments, and educational writeups. Temporary articles are clearly marked as Demo, and claims are only published when supported by evidence.</p><div className="social-links"><a href="https://github.com/mostafaa23" target="_blank" rel="noreferrer"><Code2 />github</a><a href="mailto:mostafaibrahem511@gmail.com"><Mail />email</a></div></section><section className="container writeups" id="research"><div className="writeups-heading"><span className="eyebrow">PUBLIC INDEX / RESEARCH NOTES</span><span className="index-count">{visibleArticles.length} notes</span></div><div className="writeup-list"><ArticleCard article={featured} featured />{publicArticles.filter((article) => article.slug !== featured.slug).map((article) => <ArticleCard key={article.slug} article={article} />)}</div><Link href="/archive" className="archive-link">View complete archive <ArrowUpRight /></Link></section><footer className="site-footer"><div className="container footer-inner"><div><h2>Mostafa Tolba&apos;s Cybersecurity Blog</h2><p>Cloud security research, penetration testing writeups, malware analysis, and vulnerability research.</p></div><div className="footer-meta"><span>Mostafa Tolba</span><a href="mailto:mostafaibrahem511@gmail.com">mostafaibrahem511@gmail.com</a></div></div></footer></main></BlogShell>
+}
